@@ -1,0 +1,24 @@
+{
+  "name": "clean-cache-control-manguinho",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegocruz-s/clean-cache-control.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegocruz-s/clean-cache-control/issues"
+  },
+  "homepage": "https://github.com/diegocruz-s/clean-cache-control#readme",
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^6.0.3"
+  }
+}
