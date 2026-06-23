@@ -7,27 +7,38 @@ class LocalSavePurchases {
 }
 
 interface CacheStore {
-  delete: () => void
-};
+  delete: () => void;
+}
 
 class CacheStoreSpy implements CacheStore {
   deleteCallsCount = 0;
-  delete (): void {
+  delete(): void {
     this.deleteCallsCount++;
-  };
+  }
 }
 
-describe('LocalSavePurchases', () => {
-  it('should not delete cache on sut.init', () => {
-    const cacheStore = new CacheStoreSpy();
-    new LocalSavePurchases(cacheStore);
-    expect(cacheStore.deleteCallsCount).toBe(0);
-  })
+type SutTypes = {
+  sut: LocalSavePurchases;
+  cacheStore: CacheStoreSpy;
+};
+const makeSut = (): SutTypes => {
+  const cacheStore = new CacheStoreSpy();
+  const sut = new LocalSavePurchases(cacheStore);
 
-  it('should delete old cache on sut.save', async () => {
-    const cacheStore = new CacheStoreSpy();
-    const sut = new LocalSavePurchases(cacheStore);
+  return {
+    sut, cacheStore
+  }
+};
+
+describe("LocalSavePurchases", () => {
+  it("should not delete cache on sut.init", () => {
+    const { cacheStore } = makeSut();
+    expect(cacheStore.deleteCallsCount).toBe(0);
+  });
+
+  it("should delete old cache on sut.save", async () => {
+    const { sut, cacheStore } = makeSut()
     await sut.save();
     expect(cacheStore.deleteCallsCount).toBe(1);
-  })
-})
+  });
+});
