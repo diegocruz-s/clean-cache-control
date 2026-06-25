@@ -20,4 +20,11 @@ describe("LocalPurchasesManager", () => {
     const { cacheStore } = makeSut();
     expect(cacheStore.actions).toEqual([]);
   });
+
+  it("should call correct key on load", async () => {
+    const { sut, cacheStore } = makeSut();
+    await sut.loadAll();
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.fetchKey).toBe('purchases');
+  })
 });
