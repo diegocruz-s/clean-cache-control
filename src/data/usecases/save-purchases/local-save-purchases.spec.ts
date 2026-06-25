@@ -18,15 +18,15 @@ const makeSut = (timestamp = new Date()): SutTypes => {
 describe("LocalSavePurchases", () => {
   it("should not delete or insert cache on sut.init", () => {
     const { cacheStore } = makeSut();
-    expect(cacheStore.messages).toEqual([]);
+    expect(cacheStore.actions).toEqual([]);
   });
 
   it("should not insert new cache if delete fails", async () => {
     const { sut, cacheStore } = makeSut();
     cacheStore.simulateDeleteError();
     const promise = sut.save(mockPurchases());
-    expect(cacheStore.messages).toEqual([
-      CacheStoreSpy.Message.delete,
+    expect(cacheStore.actions).toEqual([
+      CacheStoreSpy.Action.delete,
     ]);
     await expect(promise).rejects.toThrow();
   });
@@ -36,9 +36,9 @@ describe("LocalSavePurchases", () => {
     const { sut, cacheStore } = makeSut(timestamp);
     const purchases = mockPurchases();
     const promise = sut.save(purchases);
-    expect(cacheStore.messages).toEqual([
-      CacheStoreSpy.Message.delete,
-      CacheStoreSpy.Message.insert,
+    expect(cacheStore.actions).toEqual([
+      CacheStoreSpy.Action.delete,
+      CacheStoreSpy.Action.insert,
     ]);
     expect(cacheStore.deleteKey).toBe("purchases");
     expect(cacheStore.insertKey).toBe("purchases");
@@ -53,9 +53,9 @@ describe("LocalSavePurchases", () => {
     const { sut, cacheStore } = makeSut();
     cacheStore.simulateInsertError();
     const promise = sut.save(mockPurchases());
-    expect(cacheStore.messages).toEqual([
-      CacheStoreSpy.Message.delete,
-      CacheStoreSpy.Message.insert,
+    expect(cacheStore.actions).toEqual([
+      CacheStoreSpy.Action.delete,
+      CacheStoreSpy.Action.insert,
     ]);
     await expect(promise).rejects.toThrow();
   });
