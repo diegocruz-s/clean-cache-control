@@ -1,13 +1,13 @@
 import { CacheStoreSpy, mockPurchases } from "@/data/tests";
-import { LocalSavePurchases } from "./local-save-purchases";
+import { LocalPurchasesManager } from "./local-load-purchases";
 
 type SutTypes = {
-  sut: LocalSavePurchases;
+  sut: LocalPurchasesManager;
   cacheStore: CacheStoreSpy;
 };
 const makeSut = (timestamp = new Date()): SutTypes => {
   const cacheStore = new CacheStoreSpy();
-  const sut = new LocalSavePurchases(cacheStore, timestamp);
+  const sut = new LocalPurchasesManager(cacheStore, timestamp);
 
   return {
     sut,
@@ -15,7 +15,7 @@ const makeSut = (timestamp = new Date()): SutTypes => {
   };
 };
 
-describe("LocalSavePurchases", () => {
+describe("LocalPurchasesManager", () => {
   it("should not delete or insert cache on sut.init", () => {
     const { cacheStore } = makeSut();
     expect(cacheStore.actions).toEqual([]);
@@ -25,9 +25,7 @@ describe("LocalSavePurchases", () => {
     const { sut, cacheStore } = makeSut();
     cacheStore.simulateDeleteError();
     const promise = sut.save(mockPurchases());
-    expect(cacheStore.actions).toEqual([
-      CacheStoreSpy.Action.delete,
-    ]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.delete]);
     await expect(promise).rejects.toThrow();
   });
 
