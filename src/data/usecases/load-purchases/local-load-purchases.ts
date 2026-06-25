@@ -25,7 +25,7 @@ export class LocalPurchasesManager implements SavePurchases, LoadPurchases {
       if (maxAge > this.currentDate) {
         return cache.value;
       }
-      
+
       throw new Error();
     } catch (error) {
       this.cacheStore.delete(this.key);
