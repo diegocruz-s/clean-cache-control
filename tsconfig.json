@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-
+    "esModuleInterop": true,
     // "outDir": "./dist",
 
     // Environment Settings

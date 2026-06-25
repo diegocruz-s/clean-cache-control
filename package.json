@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/diegocruz-s/clean-cache-control#readme",
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.0.0",
     "jest": "^30.4.2",
